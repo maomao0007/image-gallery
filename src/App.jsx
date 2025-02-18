@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import  NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PhotoDetail from "./components/PhotoDetail";
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
+            <Route path="/photos/:id" element={<PhotoDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
