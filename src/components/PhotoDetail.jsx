@@ -1,24 +1,83 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Camera } from "lucide-react"
+import axios from "axios";
 
 const PhotoDetail = () => {
-  return (
-    
-    // <div>PhotoDetail</div>
+  const { id } = useParams();
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const apiKey = import.meta.env.VITE_PHOTO_API_KEY;
 
-     <div
-        key={photo.id}
-        className="rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer"
-      >
-        <img
-          src={photo.src.large2x}
-          alt={photo.photographer}
-          className="w-full h-full object-cover"
-        />
-        <div className="p-2">
-        <p className="text-sm text-gray-600">By: {photo.photographer}</p>
-      </div> 
+  useEffect(() => {
+    const fetchPhotoDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.pexels.com/v1/photos/${id}`,
+          { headers: { Authorization: apiKey } }
+        );
+        console.log("key", apiKey)
+        setPhoto(response.data);
+        setError(null);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchPhotoDetail();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen w-62 flex items-center justify-center bg-gray-700">
+        <div className="text-center p-4">Loading...</div>
       </div>
-  )
-}
+    );
+  }
 
-export default PhotoDetail
+  if (error) {
+    return (
+      <div className="min-h-screen w-62 flex items-center justify-center bg-red-700">
+        <div className="text-white">{error}</div>
+      </div>
+    );
+  }
+
+  if (!photo) {
+    return (
+      <div className="min-h-screen w-62 flex items-center justify-center bg-gray-700">
+        <div className="text-center p-4">Photo not found</div>;
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="text-left p-4">
+        <Link to="/" className="text-blue-600 hover:text-blue-800">
+          ← Back to Gallery
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 gap-6">
+        <div className="rounded-lg overflow-hidden shadow-md">
+          <img
+            src={photo.src.large}
+            alt={photo.photographer}
+            className="w-full h-[600px] object-cover"
+          />
+        </div>
+        <div className="flex flex-col items-center justify-center p-4">
+          <p className="text-gray-600 mb-4">{photo.alt}</p>
+          <h2 className="text-2xl font-semibold m-2 text-gray-500 flex items-center gap-2">
+            <Camera size={30} className="text-gray-500 opacity-75" />
+            <span>: {photo.photographer}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PhotoDetail;
