@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Camera } from "lucide-react"
+import { Camera, Heart } from "lucide-react"
 import axios from "axios";
 
 const PhotoDetail = () => {
@@ -61,7 +61,11 @@ const PhotoDetail = () => {
         </Link>
       </div>
       <div className="grid grid-cols-2 gap-6">
-        <div className="rounded-lg overflow-hidden shadow-md">
+        <div className="relative rounded-lg overflow-hidden shadow-md">
+          <Heart
+            size={24}
+            className="absolute top-4 right-4 z-10 transform hover:scale-110 transition-transform"
+          />
           <img
             src={photo.src.large}
             alt={photo.photographer}
