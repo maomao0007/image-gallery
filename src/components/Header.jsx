@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 const Header = () => {
   return (
     <div className="w-full bg-white shadow-md relative">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between py-4 px-2">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4">
+        <div className="flex items-center justify-between py-4 px-1 sm:px-2">
           <div className="flex items-center">
             <Link
               to="/"
@@ -19,13 +19,13 @@ const Header = () => {
               to="/"
               className="text-base text-gray-800 hover:text-gray-600"
             >
-              Homepage
+              Home
             </Link>
             <Link
-              to="/about"
+              to="/favorites"
               className="text-base text-gray-800 hover:text-gray-600"
             >
-              About
+              Favorites
             </Link>
           </div>
         </div>

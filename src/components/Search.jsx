@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { debounce } from "lodash";
 import { Heart } from "lucide-react";
+import { useLoved } from "./LovedContext";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
-  const [lovedPhotos, setLovedPhotos] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const { lovedPhotos, toggleLove } = useLoved(); 
   const apiKey = import.meta.env.VITE_PHOTO_API_KEY;
 
   const debouncedFetchPhotos = debounce(async (term) => {
@@ -22,8 +24,10 @@ const Search = () => {
       });
       setPhotos(response.data.photos);
       setError(null);
+      setLoading(false); 
     } catch (err) {
       setError(err.message);
+      setLoading(false); 
     }
   }, 500);
 
@@ -34,24 +38,21 @@ const Search = () => {
     };
   }, [searchTerm]);
 
-  const toggleLove = (photoId, e) => {
-    e.preventDefault();
-    setLovedPhotos((prev) => {
-      const newState = prev.includes(photoId)
-        ? prev.filter((id) => id !== photoId)
-        : [...prev, photoId];
-      localStorage.setItem = ("lovedPhotos", JSON.stringify(newState));
-      return newState;
-    });
-  };
+   if (loading) {
+     return (
+       <div className="min-h-screen w-full flex items-center justify-center bg-gray-700">
+         <div className="text-center p-4">Loading...</div>
+       </div>
+     );
+   }
 
   const renderPhotoItem = (photo) => (
     <Link to={`/photos/${photo.id}`} key={photo.id}>
       <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer">
         <Heart
           size={24}
-          fill={lovedPhotos.includes(photo.id) ? "pink" : "none"}
-          onClick={(e) => toggleLove(photo.id, e)}
+          fill={photo.id in lovedPhotos ? "pink" : "none"}
+          onClick={(e) => toggleLove(photo, e)}
           className="absolute top-4 right-4 z-10 transform hover:scale-110 transition-transform"
         />
         <img
@@ -68,7 +69,7 @@ const Search = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4">
       <input
         type="text"
         placeholder="Search Photo"
