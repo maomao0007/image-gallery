@@ -2,10 +2,13 @@
 
 A responsive photo gallery website built with React and Tailwind CSS. Users can browse curated photos from Pexels API, search for specific images, and save their favorites.
 
+- Please visit: https://photo-gallery-m6f6.onrender.com
+
 ## Features
 
 - Browse curated photos from Pexels
 - Search functionality for finding specific images
+- Pagination for browsing through photo collections
 - Displays the photo description and photographer
 - Add/remove photos to favorites using React Context
 - Responsive grid layout with Tailwind CSS
