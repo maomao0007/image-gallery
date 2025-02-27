@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
-import { useLoved } from "../components/LovedContext";;
+import { useLoved } from "../components/LovedContext";
 
 const LovedPhotos = () => {
   const [error, setError] = useState(null);
@@ -17,14 +17,22 @@ const LovedPhotos = () => {
 
   if (Object.keys(lovedPhotos).length === 0) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-700 shadow-lg">
-        <div className="text-center text-2xl font-semibold p-4">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <Heart
+            className="mx-auto h-16 w-16 text-gray-400 animate-pulse mb-6"
+            strokeWidth={2}
+          />
+        </div>
+        <div className="text-gray-600 text-2xl font-semibold mb-4">
           No Favorites Yet
         </div>
-
+        <p className="text-gray-400 text-sm mb-6">
+          Start adding some photos to your favorites!
+        </p>
         <Link
           to="/"
-          className="inline-block px-4 py-2 bg-rose-300 text-white rounded-lg hover:bg-rose-200 transition-colors duration-300 shadow-md hover:shadow-lg"
+          className="inline-block px-6 py-3 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors duration-300 shadow-md hover:shadow-lg"
         >
           Explore Photos
         </Link>
