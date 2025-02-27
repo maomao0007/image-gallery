@@ -50,7 +50,7 @@ const LovedPhotos = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 px-4">
         {Object.entries(lovedPhotos).map(([id, photo]) => (
           <Link to={`/photos/${photo.id}`} key={photo.id}>
-            <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer">
+            <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer aspect-4/3 h-64">
               <div
                 key={photo.id}
                 className="relative rounded-lg overflow-hidden shadow-md"

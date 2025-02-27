@@ -9,12 +9,12 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const { lovedPhotos, toggleLove } = useLoved(); 
+  const { lovedPhotos, toggleLove } = useLoved();
   const apiKey = import.meta.env.VITE_PHOTO_API_KEY;
 
-   const fetchPhotos = async (term, currentPage) => {
+  const fetchPhotos = async (term, currentPage) => {
     try {
       const url = term
         ? `https://api.pexels.com/v1/search?query=${term}&per_page=30&page=${currentPage}`
@@ -30,9 +30,9 @@ const Search = () => {
       setError(err.message);
       setLoading(false);
     }
-   }
+  };
 
-    const debouncedFetchPhotos = debounce((term, currentPage) => {
+  const debouncedFetchPhotos = debounce((term, currentPage) => {
     fetchPhotos(term, currentPage);
   }, 500);
 
@@ -45,36 +45,39 @@ const Search = () => {
   }, [searchTerm, page, apiKey]);
 
   useEffect(() => {
-    window.scrollTo({top:0, behavior: "smooth" })
-  },[page])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
- if (loading) {
-   return (
-     <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
-       <div className="text-center">
-         <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
-         <p className="text-gray-600 text-lg font-medium">Loading photos...</p>
-         <p className="text-gray-400 text-sm">Please wait a moment</p>
-       </div>
-     </div>
-   );
- }
+  if (loading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
+          <p className="text-gray-600 text-lg font-medium">Loading photos...</p>
+          <p className="text-gray-400 text-sm">Please wait a moment</p>
+        </div>
+      </div>
+    );
+  }
 
   const handlePrevPage = () => {
     if (page > 1) {
-      setPage(prev => prev - 1);
+      setPage((prev) => prev - 1);
     }
   };
 
   const handleNextPage = () => {
-    setPage(prev => prev + 1);
+    setPage((prev) => prev + 1);
   };
 
-  const handleSearch = (e) => { setSearchTerm(e.target.value); setPage(1)}
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setPage(1);
+  };
 
   const renderPhotoItem = (photo) => (
     <Link to={`/photos/${photo.id}`} key={photo.id}>
-      <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer">
+      <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer aspect-4/3 h-64">
         <Heart
           size={24}
           fill={photo.id in lovedPhotos ? "pink" : "none"}
