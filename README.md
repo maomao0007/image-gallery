@@ -81,9 +81,10 @@ Favorites
 - Add/remove photos to favorites list
 
 ## Screenshot
-![homepage_image_gallery](https://github.com/user-attachments/assets/1ab53061-55aa-4e49-b9cb-a7834c863b81)
+![homepage](https://github.com/user-attachments/assets/b78f67a7-7f8c-420a-8b53-df56dcff55c1)
 ![photodetail_image_gallery](https://github.com/user-attachments/assets/dc7a68a6-c2b4-41d8-92b0-6bf1a2d60b77)
-![favorites_image_gallery](https://github.com/user-attachments/assets/ffca21ae-e81d-4496-886d-da151373e377)
+![favorites_image_gallery](https://github.com/user-attachments/assets/25780754-24f1-4c94-92c9-180c193ea5c1)
+
 
 
 
