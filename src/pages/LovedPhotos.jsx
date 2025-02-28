@@ -41,20 +41,16 @@ const LovedPhotos = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4">
       <div className="text-left p-4">
         <Link to="/" className="text-blue-600 hover:text-blue-800">
           ← Back to Gallery
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {Object.entries(lovedPhotos).map(([id, photo]) => (
           <Link to={`/photos/${photo.id}`} key={photo.id}>
             <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer aspect-4/3 h-64">
-              <div
-                key={photo.id}
-                className="relative rounded-lg overflow-hidden shadow-md"
-              >
                 <Heart
                   size={24}
                   fill="pink"
@@ -62,12 +58,11 @@ const LovedPhotos = () => {
                   className="absolute top-4 right-4 z-10 transform hover:scale-110 transition-transform"
                 />
                 <img
-                  src={photo.src.large}
+                  src={photo.src.large2x}
                   alt={photo.photographer}
-                  className="w-full h-[600px] object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
-            </div>
           </Link>
         ))}
       </div>
