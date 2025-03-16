@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { debounce } from "lodash";
 import { Heart } from "lucide-react";
 import { useLoved } from "./LovedContext";
 
@@ -32,16 +31,12 @@ const Search = () => {
     }
   };
 
-  const debouncedFetchPhotos = debounce((term, currentPage) => {
-    fetchPhotos(term, currentPage);
-  }, 500);
-
   useEffect(() => {
-    debouncedFetchPhotos(searchTerm, page);
-
-    return () => {
-      debouncedFetchPhotos.cancel();
-    };
+    const timer = setTimeout(() => {
+      fetchPhotos(searchTerm, page);
+    }, 500)
+    
+    return () => clearTimeout(timer);
   }, [searchTerm, page, apiKey]);
 
   useEffect(() => {
