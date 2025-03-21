@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Heart } from "lucide-react";
+import { Heart, ArrowUpFromLine } from "lucide-react";
 import { useLoved } from "./LovedContext";
 
 const Search = () => {
@@ -89,6 +89,10 @@ const Search = () => {
     setSearchTerm(e.target.value);
   };
 
+   const scrollToTop = () => {
+     window.scrollTo({ top: 0, behavior: "smooth" });
+   };
+
   const renderPhotoItem = (photo, index) => (
     <Link to={`/photos/${photo.id}`} key={`${photo.id}-${index}`}>
       <div className="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg cursor-pointer aspect-4/3 h-64">
@@ -115,13 +119,19 @@ const Search = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl mx-auto px-4 relative">
       <input
         type="text"
         placeholder="Search Photo"
         value={searchTerm}
         onChange={handleSearch}
         className="w-full px-4 py-2 mb-6 border border-gray-300 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <ArrowUpFromLine
+        size={40}
+        className="fixed right-14 bottom-8 transform hover:scale-110 transition-transform bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-full shadow-lg hover:shadow-2xl transition duration-300 ease-in-out cursor-pointer z-20"
+        onClick={scrollToTop}
       />
 
       {error && (
