@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Camera, Heart } from "lucide-react"
+import { Camera, Heart } from "lucide-react";
 import axios from "axios";
 import { useLoved } from "./LovedContext";
+import Loading from "./Loading";
 
 const PhotoDetail = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const PhotoDetail = () => {
   const [error, setError] = useState(null);
   const { lovedPhotos, toggleLove } = useLoved();
   const apiKey = import.meta.env.VITE_PHOTO_API_KEY;
-    
+
   useEffect(() => {
     const fetchPhotoDetail = async () => {
       try {
@@ -30,17 +31,7 @@ const PhotoDetail = () => {
     fetchPhotoDetail();
   }, [id]);
 
- if (loading) {
-   return (
-     <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
-       <div className="text-center">
-         <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
-         <p className="text-gray-600 text-lg font-medium">Loading photos...</p>
-         <p className="text-gray-400 text-sm">Please wait a moment</p>
-       </div>
-     </div>
-   );
- }
+  if (loading) return <Loading />;
 
   if (error) {
     return (
@@ -53,7 +44,7 @@ const PhotoDetail = () => {
   if (!photo) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-gray-700">
-        <div className="text-center p-4">Photo not found</div>;
+        <div className="text-center p-4">Photo not found</div>
       </div>
     );
   }

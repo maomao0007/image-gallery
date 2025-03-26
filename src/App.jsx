@@ -1,15 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import HomePage from "./pages/HomePage";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NotFound from "./pages/NotFound";
+import { LovedProvider } from "./components/LovedContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import PhotoDetail from "./components/PhotoDetail";
-import LovedPhotos from "./pages/LovedPhotos";
-import { LovedProvider } from "./components/LovedContext";
+import NotFound from "./pages/NotFound";
+import Loading from "./components/Loading";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const PhotoDetail = lazy(
+  () =>
+    new Promise((resolve) => {
+      setTimeout(() => resolve(import("./components/PhotoDetail")), 2000);
+    })
+);
+const LovedPhotos = lazy(() => import("./pages/LovedPhotos"));
 
 function App() {
   return (
@@ -18,12 +22,14 @@ function App() {
         <LovedProvider>
           <Header />
           <main className="container mx-auto py-8">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/photos/:id" element={<PhotoDetail />} />
-              <Route path="/favorites" element={<LovedPhotos />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/photos/:id" element={<PhotoDetail />} />
+                <Route path="/favorites" element={<LovedPhotos />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </LovedProvider>
