@@ -7,12 +7,7 @@ import NotFound from "./pages/NotFound";
 import Loading from "./components/Loading";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const PhotoDetail = lazy(
-  () =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve(import("./components/PhotoDetail")), 2000);
-    })
-);
+const PhotoDetail = lazy(() => import("./components/PhotoDetail"));
 const LovedPhotos = lazy(() => import("./pages/LovedPhotos"));
 
 function App() {
